@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CINEMA</title>
+    <style>
+        h2 {
+            font-size: 20px;
+        }
+
+        .content {
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .column {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .film {
+            min-width: 80px;
+            height: 60px;
+            background-color: blueviolet;
+            text-align: center;
+            margin-bottom: 2px;
+        }
+
+        .film:hover {
+            cursor: pointer;
+            opacity: 0.5;
+        }
+
+    </style>
+</head>
+<body>
+    <h1>CINEMA !</h1>
+    <div>
+        <form id="addMovie">
+            <input type="text" id="name" placeholder="Ajoute un nouveau film">
+            <button type="submit">AJOUTER</button>
+        </form>
+    </div>
+    <div class="content">
+        <div id="films" class="column">
+            <h2>Films à l'affiche</h2>
+
+        </div>
+        <div id="enSalle" class="column">
+            <h2>Films en salle</h2>
+        </div>
+    </div>
+
+<script>
+const divFilms = document.getElementById('films')
+    const divRoom = document.getElementById('enSalle')
+
+    function createMovie(name, target) {
+        const div = document.createElement('div')
+        div.classList.add('film')
+        div.innerText = name
+        if (target === 'films') {
+            div.addEventListener('click', function () {
+                createMovie(name, 'enSalle')
+            })
+            divFilms.appendChild(div)
+        } else if (target === 'enSalle') {
+            div.addEventListener('click', function () {
+                div.remove()
+            })
+            divRoom.appendChild(div)
+        }  else {
+            div.remove()
+        }
+    }
+
+
+    const form = document.getElementById('addMovie')
+    form.addEventListener('submit', function (event) {
+        event.preventDefault()
+        const inputValue = document.getElementById('name').value
+        createMovie(inputValue, 'films')
+    })
+</script>
+</body>
+</html>
+
